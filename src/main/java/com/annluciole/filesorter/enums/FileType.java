@@ -4,8 +4,9 @@ import java.util.List;
 
 public enum FileType {
 
-    PHOTO("Фото", List.of("jpg", "jpeg", "gif")),
-    VIDEO("Видео", List.of("mp4", "avi"));
+    PHOTO("Фото", List.of("jpg", "jpeg", "png")),
+    VIDEO("Видео", List.of("mp4", "avi")),
+    PICTURES("Картинки", List.of("dng", "gif")),;
 
     private final String directoryName;
     private final List<String> extTypes;
