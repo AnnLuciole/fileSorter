@@ -6,7 +6,8 @@ public enum FileType {
 
     PHOTO("Фото", List.of("jpg", "jpeg", "png")),
     VIDEO("Видео", List.of("mp4", "avi")),
-    PICTURES("Картинки", List.of("dng", "gif")),;
+    PICTURES("Картинки", List.of("dng", "gif")),
+    BOOKS("Книги", List.of("fb2")),;
 
     private final String directoryName;
     private final List<String> extTypes;

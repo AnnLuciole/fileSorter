@@ -1,6 +1,6 @@
-package com.annluciole.filesorter.service.handler;
+package com.annluciole.filesorter.service.handler.creationdate.impl;
 
-import com.annluciole.filesorter.service.CreationDateHandler;
+import com.annluciole.filesorter.service.handler.creationdate.CreationDateHandler;
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.imaging.ImageProcessingException;
 import com.drew.metadata.Metadata;
@@ -12,7 +12,6 @@ import java.nio.file.Path;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.util.Date;
 
 @Component
 public class DngCreationDateHandler extends CreationDateHandler {

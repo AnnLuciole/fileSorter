@@ -1,12 +1,8 @@
 package com.annluciole.filesorter.config;
 
-import com.annluciole.filesorter.service.CreationDateHandlerRepository;
-import com.annluciole.filesorter.service.FileNameGenerator;
-import com.annluciole.filesorter.service.FilePathGenerator;
-import com.annluciole.filesorter.service.impl.FileNameByCreationDateGenerator;
-import com.annluciole.filesorter.service.impl.FileNameGeneratorImpl;
-import com.annluciole.filesorter.service.impl.FilePathGeneratorByMonthAndYearImpl;
-import com.annluciole.filesorter.service.impl.FilePathGeneratorByYearImpl;
+import com.annluciole.filesorter.repository.FileInfoRepository;
+import com.annluciole.filesorter.service.generator.filename.impl.BookFileNameGeneratorImpl;
+import com.annluciole.filesorter.service.generator.filename.FileNameGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -26,19 +22,7 @@ public class SorterConfig {
     }
 
     @Bean
-    public FilePathGenerator filePathGenerator(CreationDateHandlerRepository creationDateHandlerRepository) {
-        return switch (applicationProperties.getSortStrategy()) {
-            case BY_YEAR_AND_MONTH ->
-                    new FilePathGeneratorByMonthAndYearImpl(destinationFilesPath, creationDateHandlerRepository);
-            case BY_YEAR -> new FilePathGeneratorByYearImpl(destinationFilesPath, creationDateHandlerRepository);
-        };
-    }
-
-    @Bean
-    public FileNameGenerator fileNameGenerator() {
-        return switch (applicationProperties.getRenameStrategy()) {
-            case NO_RENAME -> new FileNameGeneratorImpl();
-            case RENAME_TO_CREATION_DATE -> new FileNameByCreationDateGenerator();
-        };
+    public FileNameGenerator fileNameGenerator(FileInfoRepository fileInfoRepository) {
+        return new BookFileNameGeneratorImpl(fileInfoRepository);
     }
 }

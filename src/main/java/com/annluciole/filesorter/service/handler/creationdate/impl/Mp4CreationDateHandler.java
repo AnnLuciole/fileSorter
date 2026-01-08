@@ -1,6 +1,6 @@
-package com.annluciole.filesorter.service.handler;
+package com.annluciole.filesorter.service.handler.creationdate.impl;
 
-import com.annluciole.filesorter.service.CreationDateHandler;
+import com.annluciole.filesorter.service.handler.creationdate.CreationDateHandler;
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.imaging.ImageProcessingException;
 import com.drew.metadata.Directory;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.time.Instant;
-import java.util.Date;
 
 @Component
 public class Mp4CreationDateHandler extends CreationDateHandler {

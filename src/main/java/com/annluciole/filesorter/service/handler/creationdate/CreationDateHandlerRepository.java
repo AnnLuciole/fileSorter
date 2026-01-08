@@ -1,4 +1,4 @@
-package com.annluciole.filesorter.service;
+package com.annluciole.filesorter.service.handler.creationdate;
 
 import org.springframework.stereotype.Component;
 
