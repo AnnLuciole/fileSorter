@@ -21,12 +21,4 @@ public interface FileInfoRepository {
      * @return сущность
      */
     FileInfo findByPath(String path);
-
-    /**
-     * Обновляет путь к сущности
-     *
-     * @param oldPath старый путь к сущности
-     * @param newPath новый путь к сущности
-     */
-    FileInfo updatePath(String oldPath, String newPath);
 }

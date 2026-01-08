@@ -3,7 +3,6 @@ package com.annluciole.filesorter.service.impl;
 import com.annluciole.filesorter.service.*;
 import com.annluciole.filesorter.service.generator.filename.FileNameGeneratorRepository;
 import com.annluciole.filesorter.service.generator.filepath.FilePathGenerator;
-import com.annluciole.filesorter.service.generator.filepath.CommonPathGeneratorRepository;
 import com.annluciole.filesorter.service.handler.format.ArchiveHandler;
 import com.annluciole.filesorter.service.metadata.MetadataReader;
 import com.annluciole.filesorter.service.metadata.MetadataReaderRepository;
@@ -29,7 +28,6 @@ public class FileSorterServiceImpl implements FileSorterService {
                                  ArchiveHandler archiveHandler,
                                  MetadataReaderRepository metadataReaderRepository,
                                  FileRenameService fileRenameService,
-                                 CommonPathGeneratorRepository commonPathGeneratorRepository,
                                  FilePathGenerator filePathGenerator) {
         this.fileNameGeneratorRepository = fileNameGeneratorRepository;
         this.archiveHandler = archiveHandler;

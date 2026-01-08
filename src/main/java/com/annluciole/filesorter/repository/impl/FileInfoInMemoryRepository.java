@@ -10,7 +10,7 @@ import java.util.Map;
 @Component
 public class FileInfoInMemoryRepository implements FileInfoRepository {
 
-    private final Map<String, FileInfo> repository = new HashMap<String, FileInfo>();
+    private final Map<String, FileInfo> repository = new HashMap<>();
 
     @Override
     public void save(FileInfo fileInfo) {

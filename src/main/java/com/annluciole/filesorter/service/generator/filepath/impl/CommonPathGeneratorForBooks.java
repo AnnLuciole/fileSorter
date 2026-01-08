@@ -16,7 +16,7 @@ public class CommonPathGeneratorForBooks extends CommonPathGenerator {
     public StringBuilder generateCommonPath(FileInfo fileInfo) {
         StringBuilder commonPath = super.generateCommonPath(fileInfo);
         commonPath.append("/");
-        commonPath.append(fileInfo.getMetadata().get("genre").toString());
+        commonPath.append(fileInfo.getMetadata().get("genre"));
         commonPath.append("/");
         return commonPath;
     }

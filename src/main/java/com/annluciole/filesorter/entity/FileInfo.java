@@ -10,7 +10,7 @@ public class FileInfo {
     private String filePath;
     private ZonedDateTime createdDate;
     private String extension;
-    private Map<String, Object> metadata;
+    private Map<String, String> metadata;
 
     public String getFilePath() {
         return filePath;
@@ -52,11 +52,11 @@ public class FileInfo {
         this.extension = extension;
     }
 
-    public Map<String, Object> getMetadata() {
+    public Map<String, String> getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(Map<String, Object> metadata) {
+    public void setMetadata(Map<String, String> metadata) {
         this.metadata = metadata;
     }
 }

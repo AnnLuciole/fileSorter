@@ -9,12 +9,10 @@ import java.util.Map;
 @Component
 public class CreationDateHandlerRepository {
 
-    private final Map<String, CreationDateHandler> handlers = new HashMap<String, CreationDateHandler>();
+    private final Map<String, CreationDateHandler> handlers = new HashMap<>();
 
     public CreationDateHandlerRepository(List<CreationDateHandler> creationDateHandlers) {
-        creationDateHandlers.forEach(handler -> {
-            handlers.put(handler.getFileType(), handler);
-        });
+        creationDateHandlers.forEach(handler -> handlers.put(handler.getFileType(), handler));
     }
 
     public CreationDateHandler getCreationDateHandler(String fileType) {

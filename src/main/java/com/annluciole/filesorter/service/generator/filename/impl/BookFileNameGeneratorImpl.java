@@ -6,7 +6,6 @@ import com.annluciole.filesorter.service.generator.filename.FileNameGenerator;
 import org.springframework.stereotype.Component;
 
 import java.nio.file.Path;
-import java.util.List;
 
 @Component
 public class BookFileNameGeneratorImpl extends FileNameGenerator {
@@ -21,9 +20,9 @@ public class BookFileNameGeneratorImpl extends FileNameGenerator {
     public void generateFileName(Path path) {
         FileInfo fileInfo = repository.findByPath(path.toString());
         StringBuilder newFileName = new StringBuilder();
-        newFileName.append(fileInfo.getMetadata().get("book-title").toString());
+        newFileName.append(fileInfo.getMetadata().get("book-title"));
         newFileName.append(" - ");
-        newFileName.append(String.join(", ", ((List<String>) fileInfo.getMetadata().get("authors"))));
+        newFileName.append(fileInfo.getMetadata().get("authors"));
         newFileName.append(".");
         newFileName.append(fileInfo.getExtension());
         fileInfo.setNewFileName(newFileName.toString());

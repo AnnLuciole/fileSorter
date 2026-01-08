@@ -9,7 +9,7 @@ import java.util.Map;
 @Component
 public class FileNameGeneratorRepository {
 
-    private final Map<String, FileNameGenerator> generators = new HashMap<String, FileNameGenerator>();
+    private final Map<String, FileNameGenerator> generators = new HashMap<>();
 
     public FileNameGeneratorRepository(List<FileNameGenerator> generatorsList) {
         generatorsList.forEach(generator -> generators.put(generator.getFileExtension(), generator));

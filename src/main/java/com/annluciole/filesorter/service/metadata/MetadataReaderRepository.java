@@ -10,7 +10,7 @@ import java.util.Map;
 @Component
 public class MetadataReaderRepository {
 
-    private final Map<String, MetadataReader> metadataReaders = new HashMap<String, MetadataReader>();
+    private final Map<String, MetadataReader> metadataReaders = new HashMap<>();
 
     @Autowired
     public MetadataReaderRepository(List<MetadataReader> readers) {

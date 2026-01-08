@@ -9,7 +9,7 @@ import java.util.Map;
 @Component
 public class CommonPathGeneratorRepository {
 
-    private final Map<String, CommonPathGenerator> generators = new HashMap<String, CommonPathGenerator>();
+    private final Map<String, CommonPathGenerator> generators = new HashMap<>();
 
     public CommonPathGeneratorRepository(List<CommonPathGenerator> generatorsList) {
         generatorsList.forEach(generator -> generators.put(generator.getExtension(), generator));

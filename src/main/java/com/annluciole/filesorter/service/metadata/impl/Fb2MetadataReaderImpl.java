@@ -1,8 +1,8 @@
 package com.annluciole.filesorter.service.metadata.impl;
 
 import com.annluciole.filesorter.entity.FileInfo;
-import com.annluciole.filesorter.service.handler.creationdate.CreationDateHandlerRepository;
 import com.annluciole.filesorter.repository.FileInfoRepository;
+import com.annluciole.filesorter.service.handler.creationdate.CreationDateHandlerRepository;
 import com.annluciole.filesorter.service.metadata.MetadataReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,8 +17,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @Component
@@ -41,7 +39,7 @@ public class Fb2MetadataReaderImpl extends MetadataReader {
             doc.getDocumentElement().normalize();
             NodeList titleInfoList = doc.getElementsByTagName("title-info");
             if (titleInfoList.getLength() > 0) {
-                Map<String, Object> fileInfoMetadata = fileInfo.getMetadata();
+                Map<String, String> fileInfoMetadata = fileInfo.getMetadata();
                 Element titleInfo = (Element) titleInfoList.item(0);
                 getBookTitle(titleInfo, fileInfoMetadata);
                 getAuthors(titleInfo, fileInfoMetadata);
@@ -52,41 +50,45 @@ public class Fb2MetadataReaderImpl extends MetadataReader {
         }
     }
 
-    private void getGenre(Element titleInfo, Map<String, Object> fileInfoMetadata) {
+    private void getGenre(Element titleInfo, Map<String, String> fileInfoMetadata) {
         NodeList genreList = titleInfo.getElementsByTagName("genre");
         if (genreList.getLength() > 0) {
             fileInfoMetadata.put("genre", genreList.item(0).getTextContent());
         }
     }
 
-    private void getAuthors(Element titleInfo, Map<String, Object> fileInfoMetadata) {
+    private void getAuthors(Element titleInfo, Map<String, String> fileInfoMetadata) {
         NodeList authorList = titleInfo.getElementsByTagName("author");
         for (int i = 0; i < authorList.getLength(); i++) {
             Element author = (Element) authorList.item(i);
-            NodeList firstNameList = author.getElementsByTagName("first-name");
-            NodeList lastNameList = author.getElementsByTagName("last-name");
-            String authorFullName = null;
-            if (lastNameList.getLength() > 0) {
-                authorFullName = lastNameList.item(0).getTextContent();
-            }
-            if (firstNameList.getLength() > 0) {
-                authorFullName = authorFullName
-                        + " "
-                        + firstNameList.item(0).getTextContent().charAt(0)
-                        + ".";
-            }
-            List<String> authors = (List<String>) fileInfoMetadata.get("authors");
+            String authorFullName = getAuthorFullName(author);
+            String authors = fileInfoMetadata.get("authors");
             if (authors == null) {
-                authors = new ArrayList<>();
-                authors.add(authorFullName);
-                fileInfoMetadata.put("authors", authors);
+                authors = authorFullName;
             } else {
-                authors.add(authorFullName);
+                authors = authors + ", " + authorFullName;
             }
+            fileInfoMetadata.put("authors", authors);
         }
     }
 
-    private void getBookTitle(Element titleInfo, Map<String, Object> fileInfoMetadata) {
+    private String getAuthorFullName(Element author) {
+        NodeList firstNameList = author.getElementsByTagName("first-name");
+        NodeList lastNameList = author.getElementsByTagName("last-name");
+        String authorFullName = null;
+        if (lastNameList.getLength() > 0) {
+            authorFullName = lastNameList.item(0).getTextContent();
+        }
+        if (firstNameList.getLength() > 0) {
+            authorFullName = authorFullName
+                    + " "
+                    + firstNameList.item(0).getTextContent().charAt(0)
+                    + ".";
+        }
+        return authorFullName;
+    }
+
+    private void getBookTitle(Element titleInfo, Map<String, String> fileInfoMetadata) {
         NodeList titleList = titleInfo.getElementsByTagName("book-title");
         if (titleList.getLength() > 0) {
             fileInfoMetadata.put("book-title", titleList.item(0).getTextContent());
