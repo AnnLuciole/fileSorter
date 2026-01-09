@@ -3,6 +3,8 @@ package com.annluciole.filesorter.service.generator.filepath.impl;
 import com.annluciole.filesorter.entity.FileInfo;
 import com.annluciole.filesorter.repository.FileInfoRepository;
 import com.annluciole.filesorter.service.FileComparator;
+import com.annluciole.filesorter.service.generator.filename.FileNameGenerator;
+import com.annluciole.filesorter.service.generator.filename.FileNameGeneratorRepository;
 import com.annluciole.filesorter.service.generator.filepath.CommonPathGenerator;
 import com.annluciole.filesorter.service.generator.filepath.CommonPathGeneratorRepository;
 import com.annluciole.filesorter.service.generator.filepath.FilePathGenerator;
@@ -20,25 +22,30 @@ public class FilePathGeneratorImpl implements FilePathGenerator {
     protected final CreationDateHandlerRepository repository;
     protected final FileInfoRepository fileInfoRepository;
     private final FileComparator fileComparator;
+    private final FileNameGeneratorRepository fileNameGeneratorRepository;
     private final CommonPathGeneratorRepository commonPathGeneratorRepository;
 
     public FilePathGeneratorImpl(CreationDateHandlerRepository repository,
                                  FileInfoRepository fileInfoRepository,
                                  FileComparator fileComparator,
+                                 FileNameGeneratorRepository fileNameGeneratorRepository,
                                  CommonPathGeneratorRepository commonPathGeneratorRepository) {
         this.repository = repository;
         this.fileInfoRepository = fileInfoRepository;
         this.fileComparator = fileComparator;
+        this.fileNameGeneratorRepository = fileNameGeneratorRepository;
         this.commonPathGeneratorRepository = commonPathGeneratorRepository;
     }
 
     public Path generateDestinationPath(Path path) {
         FileInfo fileInfo = fileInfoRepository.findByPath(path.toString());
+        String extension = fileInfo.getExtension();
         CommonPathGenerator commonPathGenerator =
-                commonPathGeneratorRepository.getGenerator(fileInfo.getExtension());
+                commonPathGeneratorRepository.getGenerator(extension);
         StringBuilder commonPath = commonPathGenerator.generateCommonPath(fileInfo);
         if (commonPath != null) {
             createDirectories(commonPath);
+            generateFileName(path, extension);
             commonPath.append(fileInfo.getNewFileName());
             Path destinationPath = Paths.get(commonPath.toString());
             if (Files.exists(destinationPath)) {
@@ -78,5 +85,11 @@ public class FilePathGeneratorImpl implements FilePathGenerator {
         }
         destinationPath = Path.of(newDstPath.toString());
         return destinationPath;
+    }
+
+    private void generateFileName(Path path, String extension) {
+        FileNameGenerator fileNameGenerator = fileNameGeneratorRepository
+                .getFileNameGenerator(extension);
+        fileNameGenerator.generateFileName(path);
     }
 }

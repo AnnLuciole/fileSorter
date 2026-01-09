@@ -18,7 +18,7 @@ public class DefaultMetadataReaderImpl extends MetadataReader {
     }
 
     @Override
-    public void readAndSaveFileMetadata(Path path) {
-        defaultReadAndSaveFileMetadata(path);
+    public void readAndSaveFileMetadata(Path path, String extension) {
+        defaultReadAndSaveFileMetadata(path, extension);
     }
 }

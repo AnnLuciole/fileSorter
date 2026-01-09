@@ -29,8 +29,8 @@ public class Fb2MetadataReaderImpl extends MetadataReader {
     }
 
     @Override
-    public void readAndSaveFileMetadata(Path path) {
-        FileInfo fileInfo = defaultReadAndSaveFileMetadata(path);
+    public void readAndSaveFileMetadata(Path path, String extension) {
+        FileInfo fileInfo = defaultReadAndSaveFileMetadata(path, extension);
         try {
             File fb2File = new File(fileInfo.getFilePath());
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
